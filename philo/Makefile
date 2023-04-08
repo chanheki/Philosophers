@@ -6,7 +6,7 @@
 #    By: chanheki <chanheki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 18:05:34 by chanheki          #+#    #+#              #
-#    Updated: 2023/04/05 22:26:57 by chanheki         ###   ########.fr        #
+#    Updated: 2023/04/08 22:57:48 by chanheki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME		= philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror $(DBGS)
 DBGS = -fsanitize=address -g3
 
 AR = ar
@@ -42,8 +42,11 @@ RED = \033[31m
 
 sources1 :=	
 
-sources1 += main.c
+sources1 += philo.c
+sources1 += philosophers.c
+sources1 += behavior.c
 sources1 += utils/util.c
+sources1 += utils/initialize.c
 
 # ---- Bonus ---- #
 
@@ -88,12 +91,10 @@ $(object_dir)/%.o : %.c
 clean :
 	@$(RM) $(all_objects)
 	@rm -rf $(object_dir)
-	@make -C ./lib clean
 	@echo "$(RED) Delete$(BOLD) objects $(RESTINT)file $(RESET)"
 
 fclean : clean
 	@$(RM) $(NAME)
-	@make -C ./lib fclean
 	@echo "$(RED) Delete$(BOLD) $(NAME) $(RESTINT)file $(RESET)"
 
 re : fclean
