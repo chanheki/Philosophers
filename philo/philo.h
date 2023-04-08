@@ -6,7 +6,7 @@
 /*   By: chanheki <chanheki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:41:19 by chanheki          #+#    #+#             */
-/*   Updated: 2023/04/06 04:42:49 by chanheki         ###   ########.fr       */
+/*   Updated: 2023/04/08 22:41:10 by chanheki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
-
-# define TRUE	1
-# define FALSE	0
+# include <stdbool.h>
 
 typedef struct s_msg
 {
@@ -35,7 +33,7 @@ typedef struct s_philosophers
 	int					number;
 	int					number_of_times_eaten;
 	long long			last_time_eaten;
-	int					alive;
+	bool				alive;
 	pthread_t			routine;
 	pthread_mutex_t		critical_section;
 	pthread_mutex_t		*left_fork;
@@ -52,18 +50,38 @@ typedef struct s_philo_info
 	long long		time_to_eat;
 	long long		time_to_sleep;
 	long long		borntocode;
-	int				end_flag;
+	bool			end_flag;
 	t_msg			msg;
-	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	during_routine;
+	pthread_mutex_t	*forks;
 	t_philosophers	*philosophers;
 }	t_philo_info;
 
-
-long long	ft_atoll(int *validator, const char *str);
-long long	get_time(void);
+/* utils */
 long long	get_timestamp(t_philo_info *philo_info);
-void	my_usleep(long long duration);
+long long	get_time(void);
+void		my_usleep(long long duration);
+long long	ft_atoll(int *validator, const char *str);
+void		print_in_mutex(t_philosophers *philosophers, char *str);
+void		print_death(t_philosophers *philosophers);
+
+/* initialize */
+void		init_philosophers(t_philo_info *philo_info);
+int			init_philo_info(t_philo_info *philo_info, char **argv);
+
+/* philosophers */
+void		*run(void *arg);
+void		*check_run(void *arg);
+void		*check_all_done_eating(void *arg);
+void		run_philosophers(t_philo_info *philo_info);
+
+/* behavior */
+void		take_fork(t_philosophers *philosophers);
+void		take_eat(t_philosophers *philosophers);
+void		take_sleep(t_philosophers *philosophers);
+void		thinking(t_philosophers *philosophers);
+
+/* */
 
 #endif
