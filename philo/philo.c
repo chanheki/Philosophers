@@ -34,7 +34,6 @@ void	wait_for_end_of_routine(t_philo_info *philo_info)
 	while (++i < philo_info->number_of_philosophers)
 		pthread_mutex_destroy(&philo_info->forks[i]);
 	free(philo_info->forks);
-	pthread_mutex_destroy(&philo_info->mutex_print);
 }
 
 int	main(int argc, char **argv)
