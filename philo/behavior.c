@@ -27,16 +27,16 @@ void	take_fork(t_philosophers *philosophers)
 	if (!philosophers->alive)
 		return ;
 	pthread_mutex_lock(philosophers->left_fork);
-	print_in_mutex(philosophers, "has taken a fork");
+	print_fork(philosophers);
 	if (philosophers->philo_info->end_flag
 		|| philosophers->philo_info->number_of_philosophers == 1)
 	{
-		pthread_mutex_lock(philosophers->left_fork);
+		pthread_mutex_unlock(philosophers->left_fork);
 		philosophers->alive = false;
 		return ;
 	}
 	pthread_mutex_lock(philosophers->right_fork);
-	print_in_mutex(philosophers, "has taken a fork");
+	print_fork(philosophers);
 }
 
 void	take_eat(t_philosophers *philosophers)
@@ -44,13 +44,13 @@ void	take_eat(t_philosophers *philosophers)
 	if (!philosophers->alive)
 		return ;
 	pthread_mutex_lock(&philosophers->critical_section);
-	print_in_mutex(philosophers, "is eating");
+	print_eating(philosophers);
 	philosophers->last_time_eaten = get_time();
 	philosophers->number_of_times_eaten++;
 	my_usleep(philosophers->philo_info->time_to_eat);
+	pthread_mutex_unlock(&philosophers->critical_section);
 	pthread_mutex_unlock(philosophers->left_fork);
 	pthread_mutex_unlock(philosophers->right_fork);
-	pthread_mutex_unlock(&philosophers->critical_section);
 }
 
 /*
@@ -65,7 +65,7 @@ void	take_sleep(t_philosophers *philosophers)
 {
 	if (!philosophers->alive)
 		return ;
-	print_in_mutex(philosophers, "is sleeping");
+	print_sleeping(philosophers);
 	my_usleep(philosophers->philo_info->time_to_sleep);
 }
 
@@ -80,5 +80,5 @@ void	thinking(t_philosophers *philosophers)
 {
 	if (!philosophers->alive)
 		return ;
-	print_in_mutex(philosophers, "is thinking");
+	print_thinking(philosophers);
 }
