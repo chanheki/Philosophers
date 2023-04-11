@@ -6,7 +6,7 @@
 #    By: chanheki <chanheki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 18:05:34 by chanheki          #+#    #+#              #
-#    Updated: 2023/04/08 22:57:48 by chanheki         ###   ########.fr        #
+#    Updated: 2023/04/12 04:39:30 by chanheki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,9 @@
 NAME		= philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror $(DBGS)
-DBGS = -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror
+THDBGS = -fsanitize=thread -g3
+ADDBGS = -fsanitize=address -g3
 
 AR = ar
 ARFLAG = ruc
@@ -48,6 +49,7 @@ sources1 += behavior.c
 sources1 += utils/util.c
 sources1 += utils/initialize.c
 sources1 += utils/print.c
+sources1 += utils/progress.c
 
 # ---- Bonus ---- #
 

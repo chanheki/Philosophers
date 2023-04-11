@@ -6,7 +6,7 @@
 /*   By: chanheki <chanheki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 20:10:27 by chanheki          #+#    #+#             */
-/*   Updated: 2023/04/08 22:45:38 by chanheki         ###   ########.fr       */
+/*   Updated: 2023/04/12 01:13:47 by chanheki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	init_philosophers(t_philo_info *philo_info)
 		philo_info->philosophers[i].number = i + 1;
 		philo_info->philosophers[i].number_of_times_eaten = 0;
 		philo_info->philosophers[i].last_time_eaten = philo_info->borntocode;
-		philo_info->philosophers[i].alive = true;
 		philo_info->philosophers[i].philo_info = philo_info;
 		_hold_fork(philo_info, i);
 	}
