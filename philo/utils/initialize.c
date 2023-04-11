@@ -45,12 +45,11 @@ void	init_philosophers(t_philo_info *philo_info)
 {
 	int	i;
 
-	pthread_mutex_init(&philo_info->mutex_print, NULL);
 	pthread_mutex_init(&philo_info->during_routine, NULL);
-	philo_info->philosophers = (t_philosophers *)malloc (sizeof(t_philosophers) \
-									* philo_info->number_of_philosophers);
-	philo_info->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
-							* philo_info->number_of_philosophers);
+	philo_info->philosophers = (t_philosophers *)malloc(
+			sizeof(t_philosophers) * philo_info->number_of_philosophers);
+	philo_info->forks = (pthread_mutex_t *)malloc(
+			sizeof(pthread_mutex_t) * philo_info->number_of_philosophers);
 	i = -1;
 	while (++i < philo_info->number_of_philosophers)
 	{
