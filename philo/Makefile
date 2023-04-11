@@ -47,6 +47,7 @@ sources1 += philosophers.c
 sources1 += behavior.c
 sources1 += utils/util.c
 sources1 += utils/initialize.c
+sources1 += utils/print.c
 
 # ---- Bonus ---- #
 
