@@ -13,41 +13,6 @@
 #include "../philo.h"
 
 /*
- * Description: 철학자들의 죽음을 출력한다.
- * Param.   #1: 철학자들의 정보를 담고 있는 구조체
- * Return     : 없음
- */
-void	print_death(t_philosophers *philosophers)
-{
-	if (philosophers->philo_info->end_flag)
-		return ;
-	pthread_mutex_lock(&philosophers->philo_info->mutex_print);
-	printf("%lld %d died\n",
-		get_time() - philosophers->philo_info->borntocode,
-		philosophers->number);
-	pthread_mutex_unlock(&philosophers->philo_info->mutex_print);
-	philosophers->philo_info->end_flag = true;
-	philosophers->alive = false;
-}
-
-/*
- * Description: 철학자들의 행동을 출력한다.
- * Param.   #1: 철학자들의 정보를 담고 있는 구조체
- *          #2: 출력할 문자열
- * Return     : 없음
- */
-void	print_in_mutex(t_philosophers *philosophers, char *str)
-{
-	if (philosophers->philo_info->end_flag)
-		return ;
-	pthread_mutex_lock(&philosophers->philo_info->mutex_print);
-	printf("%lld %d %s\n",
-		get_time() - philosophers->philo_info->borntocode,
-		philosophers->number, str);
-	pthread_mutex_unlock(&philosophers->philo_info->mutex_print);
-}
-
-/*
  * Description: 현재 시각을 밀리초 단위로 변환 한다.
  * Param.     : 없음
  * Return     : 밀리초 단위의 시각
@@ -63,6 +28,8 @@ long long	get_time(void)
 
 /*
  * Description: 주어진 시간 만큼 usleep을 한다.
+ *              1. (300나노초 == 0.3밀리초) 만큼 쪼개서 sleep한다.
+ *              2. 내가 원하는 duration만큼 sleep하지 않았다면 다시 sleep한다.
  * Param.   #1: usleep을 하는 데 걸리는 시간
  * Return     : 없음
  */
@@ -72,14 +39,14 @@ void	my_usleep(long long duration)
 
 	now = get_time();
 	while (get_time() < duration + now)
-		usleep(100);
+		usleep(300);
 }
 
 /*
  * Description: 입력 받고 예외처리 플래그를 세운다.
  *              1. long long 타입으로 입력을 받는다.
- *              2. - 입력이 들어오면 validator을 &연산으로 0으로 초기화.
- *              3. 0 입력이 들어오지 않을 때만 validator를 ll로 
+ *              2. '-' 입력이 들어오면 validator을 &연산으로 0으로 초기화.
+ *              3. '0' 입력이 들어오지 않을 때만 validator를 ll로 
  * Param.   #1: validator
  *          #2: 입력 문자열
  * Return     : str to long long
