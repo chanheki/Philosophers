@@ -20,13 +20,19 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
-typedef struct s_msg
+typedef struct s_philo_info
 {
-	char	*think;
-	char	*take;
-	char	*eat;
-	char	*sleep;
-}	t_msg;
+	long long				number_of_philosophers;
+	long long				number_of_must_eat;
+	long long				time_to_die;
+	long long				time_to_eat;
+	long long				time_to_sleep;
+	long long				borntocode;
+	bool					end_flag;
+	pthread_mutex_t			during_routine;
+	pthread_mutex_t			*forks;
+	struct s_philosophers	*philosophers;
+}	t_philo_info;
 
 typedef struct s_philosophers
 {
@@ -38,25 +44,8 @@ typedef struct s_philosophers
 	pthread_mutex_t		critical_section;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
-	pthread_mutex_t		*mutex_print;
-	struct s_philo_info	*philo_info;
+	t_philo_info	*philo_info;
 }	t_philosophers;
-
-typedef struct s_philo_info
-{
-	long long		number_of_philosophers;
-	long long		number_of_must_eat;
-	long long		time_to_die;
-	long long		time_to_eat;
-	long long		time_to_sleep;
-	long long		borntocode;
-	bool			end_flag;
-	t_msg			msg;
-	pthread_mutex_t	mutex_print;
-	pthread_mutex_t	during_routine;
-	pthread_mutex_t	*forks;
-	t_philosophers	*philosophers;
-}	t_philo_info;
 
 /* utils */
 long long	get_timestamp(t_philo_info *philo_info);
@@ -82,6 +71,11 @@ void		take_eat(t_philosophers *philosophers);
 void		take_sleep(t_philosophers *philosophers);
 void		thinking(t_philosophers *philosophers);
 
-/* */
+/* print */
+void		print_death(t_philosophers *philosophers);
+void		print_fork(t_philosophers *philosophers);
+void		print_eating(t_philosophers *philosophers);
+void		print_sleeping(t_philosophers *philosophers);
+void		print_thinking(t_philosophers *philosophers);
 
 #endif
