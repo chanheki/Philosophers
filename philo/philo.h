@@ -66,10 +66,9 @@ void		*check_all_done_eating(void *arg);
 void		run_philosophers(t_philo_info *philo_info);
 
 /* behavior */
-void		take_fork(t_philosophers *philosophers);
+void		thinking_and_take_fork(t_philosophers *philosophers);
 void		take_eat(t_philosophers *philosophers);
 void		take_sleep(t_philosophers *philosophers);
-void		thinking(t_philosophers *philosophers);
 
 /* print */
 void		print_death(t_philosophers *philosophers);
